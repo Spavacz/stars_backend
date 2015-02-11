@@ -1,11 +1,14 @@
 package wearlabs.stars;
 
 public class Vector3 {
-    public int x;
-    public int y;
-    public int z;
 
-    public Vector3(int x, int y, int z) {
+    public static final Vector3 ZERO = new Vector3(0, 0, 0);
+
+    public double x;
+    public double y;
+    public double z;
+
+    public Vector3(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;

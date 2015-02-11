@@ -12,16 +12,14 @@ public class ShipTest {
     @Test
     public final void whenNewShipThenHasZeroPositionVector() {
         Ship ship = Ship.createShip("test");
-        Assert.assertEquals("x", new Vector3(0, 0, 0).x, ship.getPositionVector().x);
-        Assert.assertEquals("y", new Vector3(0,0,0).y, ship.getPositionVector().y);
-        Assert.assertEquals("z", new Vector3(0, 0, 0).z, ship.getPositionVector().z);
+        Assert.assertTrue(Vector3.ZERO.equals(ship.getPositionVector()));
     }
 
     // ship can orbit planet
     @Test
     public final void shipCanOrbitPlanet() {
         Ship ship = Ship.createShip("test");
-        Optional<Planet> planet = Optional.of(new Planet(new Vector3(1,2,3)));
+        Optional<Planet> planet = Optional.of(Planet.fetchPlanet("earth"));
 
         ship.orbit(planet);
         Assert.assertEquals("ship orbit planet", planet, ship.getOrbit());
@@ -33,5 +31,12 @@ public class ShipTest {
     public final void whenLaunchThenDoOrders() {
         Ship ship = Ship.createShip("test");
         ship.launchShip();
+    }
+
+    @Test
+    public final void whenNewShipThenHasNoOrders() {
+        Ship ship = Ship.createShip("test");
+
+        Assert.assertFalse("New ship has no orders", ship.hasOrders());
     }
 }
