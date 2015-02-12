@@ -3,7 +3,7 @@ package wearlabs.stars.ship;
 import wearlabs.stars.Vector3;
 import wearlabs.stars.planet.Planet;
 import wearlabs.stars.ship.order.RefuelOrder;
-import wearlabs.stars.ship.order.ShipOrder;
+import wearlabs.stars.ship.order.Order;
 import wearlabs.stars.ship.order.WaitOrder;
 
 import java.util.ArrayList;
@@ -14,9 +14,10 @@ public class Ship {
     private final String name;
     private Optional<Planet> orbit = Optional.empty();
     private Vector3 positionVector = new Vector3(0, 0, 0);
-    private ArrayList<ShipOrder> orders = new ArrayList<>();
-    private float fuel = 100;
+    private ArrayList<Order> orders = new ArrayList<>();
+    private float fuel = 10;
     private boolean destroyed = false;
+    private float maxFuel = 10;
 
     private Ship(String name) {
         this.name = name;
@@ -45,14 +46,13 @@ public class Ship {
     }
 
     private void executeOrder() {
-        if (hasOrders()) {
-            ShipOrder order = orders.remove(0);
-            order.execute();
+        if (hasOrders() && orders.get(0).execute()) {
+            orders.remove(0);
         }
     }
 
     private void assignOrders() {
-        if (fuel <= 10) {
+        if (fuel <= 1) {
             orders.add(new RefuelOrder(this));
         } else {
             orders.add(new WaitOrder(this));
@@ -79,7 +79,7 @@ public class Ship {
     }
 
     public void refuel() {
-        fuel = 100;
+        fuel += 1;
     }
 
     public void useFuel(int amount) {
@@ -91,5 +91,18 @@ public class Ship {
 
     public void report(String message) {
         System.out.println(Thread.currentThread().getName() + ": " + name + " reporting Sir! " + message);
+    }
+
+    public void addFuel(int refuelAmount) {
+        fuel += refuelAmount;
+        if (fuel > maxFuel) fuel = maxFuel;
+    }
+
+    public float getFuel() {
+        return fuel;
+    }
+
+    public float getMaxFuel() {
+        return maxFuel;
     }
 }

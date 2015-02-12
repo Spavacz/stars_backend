@@ -2,23 +2,23 @@ package wearlabs.stars.ship.order;
 
 import wearlabs.stars.ship.Ship;
 
-public class RefuelOrder implements ShipOrder {
+public class RefuelOrder extends ShipOrder {
 
-    private final static int DURATION = 10000;
-    private final Ship ship;
+    private static final int REFUEL_AMOUNT = 2;
 
     public RefuelOrder(Ship ship) {
-        this.ship = ship;
+        super(ship);
     }
 
     @Override
-    public void execute() {
-        try {
-            ship.report("Time to refuel.");
-            Thread.sleep(DURATION);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        ship.refuel();
+    public boolean execute() {
+        super.execute();
+        ship.addFuel(REFUEL_AMOUNT);
+        return ship.getFuel() == ship.getMaxFuel();
+    }
+
+    @Override
+    public String toString() {
+        return "Refueling, current tank " + ship.getFuel() + "/" + ship.getMaxFuel();
     }
 }

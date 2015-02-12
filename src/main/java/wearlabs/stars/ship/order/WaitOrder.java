@@ -2,23 +2,21 @@ package wearlabs.stars.ship.order;
 
 import wearlabs.stars.ship.Ship;
 
-public class WaitOrder implements ShipOrder {
-
-    private final static int DURATION = 1000;
-    private final Ship ship;
+public class WaitOrder extends ShipOrder {
 
     public WaitOrder(Ship ship) {
-        this.ship = ship;
+        super(ship);
     }
 
     @Override
-    public void execute() {
-        try {
-            ship.report("I'm waiting");
-            Thread.sleep(DURATION);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public boolean execute() {
+        super.execute();
         ship.useFuel(1);
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "I'm waiting for " + DURATION + "ms";
     }
 }
