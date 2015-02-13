@@ -1,10 +1,11 @@
 package wearlabs.stars.ship.order;
 
+import wearlabs.stars.PropertiesCache;
 import wearlabs.stars.ship.Ship;
 
 public class RefuelOrder extends ShipOrder {
 
-    private static final int REFUEL_AMOUNT = 2;
+    private static final int REFUEL_AMOUNT = PropertiesCache.getInstance().getIntProperty("order.refuel.amount");
 
     public RefuelOrder(Ship ship) {
         super(ship);

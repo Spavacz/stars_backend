@@ -1,10 +1,11 @@
 package wearlabs.stars.ship.order;
 
+import wearlabs.stars.PropertiesCache;
 import wearlabs.stars.ship.Ship;
 
 public abstract class ShipOrder implements Order {
 
-    protected final static int DURATION = 1000;
+    protected final static int DURATION = PropertiesCache.getInstance().getIntProperty("order.cycle.duration.ms");
     protected final Ship ship;
 
     public ShipOrder(Ship ship) {
